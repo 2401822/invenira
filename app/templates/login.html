@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        input, button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        p {
+            text-align: center;
+        }
+        a {
+            text-decoration: none;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <h1>Login</h1>
+    <form id="loginForm">
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="senha" placeholder="Senha" required>
+        <button type="submit">Entrar</button>
+    </form>
+    <p>Ainda não tem uma conta? <a href="/register">Registre-se aqui</a></p>
+
+    <script>
+        const form = document.getElementById('loginForm');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const json = {};
+            formData.forEach((value, key) => json[key] = value);
+
+            const response = await fetch('/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(json),
+            });
+
+            const result = await response.json();
+            alert(result.message);
+            if (response.status === 200) {
+                if (result.tipo === 'instrutor') {
+                    window.location.href = '/instrutor/dashboard';
+                } else if (result.tipo === 'aluno') {
+                    window.location.href = '/aluno/dashboard';
+                }
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard do Instrutor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        a, button {
+            margin-left: 5px;
+            text-decoration: none;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover, a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: right;">
+        <p>Bem-vindo, {{ usuario_nome }}! <a href="/logout" style="color: #007bff;">Sair</a></p>
+    </div>
+    <h1>Dashboard do Instrutor</h1>
+    <div>
+        <a href="/instrutor/atividades/criar">Criar Nova Atividade</a>
+        <a href="/instrutor/analytics/listar">Listar Analytics Disponíveis</a>
+    </div>
+    <h2>Atividades</h2>
+    <ul>
+        {% for atividade in atividades %}
+        <li>
+            <strong>{{ atividade.titulo }}</strong> - {{ atividade.configuracoes.dificuldade }}
+            <div>
+                <a href="/instrutor/atividades/{{ atividade.id }}/editar">Editar</a>
+                <form method="POST" action="/instrutor/atividades/{{ atividade.id }}/excluir" style="display:inline;">
+                    <button type="submit">Excluir</button>
+                </form>
+                <a href="/instrutor/atividades/{{ atividade.id }}/analytics">Ver Analytics</a>
+                <a href="/instrutor/atividades/{{ atividade.id }}/associar">Associar a Aluno</a>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

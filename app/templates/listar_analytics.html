@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics Disponíveis</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        a {
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div style="text-align: right;">
+        <p>Bem-vindo, {{ usuario_nome }}! <a href="/logout" style="color: #007bff;">Sair</a></p>
+    </div>
+    <h1>Analytics</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Atividade</th>
+                <th>Aluno</th>
+                <th>Progresso</th>
+                <th>Finalizado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in analytics %}
+            <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.atividade_id }}</td>
+                <td>{{ item.aluno_id }}</td>
+                <td>{{ item.progresso }}%</td>
+                <td>{{ 'Sim' if item.finalizado else 'Não' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ url_for('instrutor_dashboard') }}">Voltar ao Dashboard</a>
+</body>
+</html>

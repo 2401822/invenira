@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Criar Atividade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        input, textarea, select, button {
+            display: block;
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            max-width: 400px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Criar Nova Atividade</h1>
+    <form method="POST">
+        <input type="text" name="titulo" placeholder="Título" required>
+        <textarea name="descricao" placeholder="Descrição" required></textarea>
+        <select name="dificuldade" required>
+            <option value="Fácil">Fácil</option>
+            <option value="Médio">Médio</option>
+            <option value="Difícil">Difícil</option>
+        </select>
+        <input type="number" name="tempo_estimado" placeholder="Tempo Estimado (min)" required>
+        <button type="submit">Criar Atividade</button>
+    </form>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analytics da Atividade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+    </style>
+</head>
+<body>
+    <h1>Analytics da Atividade</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Aluno</th>
+                <th>Progresso</th>
+                <th>Finalizado</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for analytic in analytics %}
+            <tr>
+                <td>{{ analytic.aluno_nome }}</td>
+                <td>{{ analytic.progresso }}%</td>
+                <td>{{ 'Sim' if analytic.finalizado else 'Não' }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a href="/instrutor/dashboard" style="text-decoration: none; color: #007bff;">Voltar ao Dashboard</a>
+</body>
+</html>

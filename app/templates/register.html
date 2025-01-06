@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registrar Usuário</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            max-width: 400px;
+            margin: auto;
+        }
+        input, select, button {
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Registrar Usuário</h1>
+    <form id="registerForm" method="post">
+        <input type="text" name="nome" placeholder="Nome" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <input type="password" name="senha" placeholder="Senha" required>
+        <select name="tipo" required>
+            <option value="instrutor">Instrutor</option>
+            <option value="aluno">Aluno</option>
+        </select>
+        <button type="submit">Registrar</button>
+    </form>
+    <script>
+        const form = document.getElementById('registerForm');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const json = {};
+            formData.forEach((value, key) => json[key] = value);
+
+            const response = await fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(json),
+            });
+
+            const result = await response.json();
+            alert(result.message);
+            if (response.status === 201) {
+                window.location.href = '/login';
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard do Aluno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .completed {
+            color: green;
+            font-weight: bold;
+        }
+        .actions button {
+            margin-left: 5px;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        .actions button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script>
+        async function atualizarProgresso(atividadeId) {
+            const progresso = prompt("Informe o novo progresso (0 a 100):");
+            if (progresso !== null) {
+                const response = await fetch(`/aluno/atividade/${atividadeId}/atualizar_progresso`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ progresso })
+                });
+                const result = await response.json();
+                alert(result.message);
+                location.reload();
+            }
+        }
+
+        async function concluirAtividade(atividadeId) {
+            const response = await fetch(`/aluno/atividade/${atividadeId}/concluir`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const result = await response.json();
+            alert(result.message);
+            location.reload();
+        }
+    </script>
+</head>
+<body>
+    <div style="text-align: right;">
+        <p>Bem-vindo, {{ usuario_nome }}! <a href="/logout">Sair</a></p>
+    </div>
+    <h1>Dashboard do Aluno</h1>
+    <h2>Minhas Atividades</h2>
+    {% if atividades %}
+    <table>
+        <thead>
+            <tr>
+                <th>Atividade</th>
+                <th>Progresso</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for atividade in atividades %}
+            <tr>
+                <td>{{ atividade.titulo }}</td>
+                <td>{{ atividade.progresso }}%</td>
+                <td>
+                    {% if atividade.finalizado %}
+                    <span class="completed">Concluída</span>
+                    {% else %}
+                    Em andamento
+                    {% endif %}
+                </td>
+                <td class="actions">
+                    {% if not atividade.finalizado %}
+                    <button onclick="atualizarProgresso({{ atividade.atividade_id }})">Atualizar Progresso</button>
+                    <button onclick="concluirAtividade({{ atividade.atividade_id }})">Concluir</button>
+                    {% else %}
+                    -
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>Nenhuma atividade encontrada.</p>
+    {% endif %}
+    <a href="/" style="text-decoration: none; color: #007bff;">Voltar ao Início</a>
+</body>
+</html>

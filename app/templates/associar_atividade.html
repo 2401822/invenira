@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Associar Atividade</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        label, select, button {
+            display: block;
+            margin-top: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Associar Atividade a Aluno</h1>
+    {% if atividade %}
+        <p><strong>Atividade:</strong> {{ atividade.titulo }}</p>
+    {% else %}
+        <p>Atividade não encontrada.</p>
+    {% endif %}
+    <form method="POST">
+        <label for="aluno_id">Selecione o Aluno:</label>
+        <select name="aluno_id" id="aluno_id" required>
+            {% for aluno in alunos %}
+            <option value="{{ aluno.id }}">{{ aluno.nome }} ({{ aluno.email }})</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Associar</button>
+    </form>
+    <a href="/instrutor/dashboard" style="text-decoration: none; color: #007bff;">Voltar ao Dashboard</a>
+</body>
+</html>
